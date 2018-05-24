@@ -128,7 +128,7 @@ namespace Blogifier.Core.Controllers
         [HttpPost]
         [MustBeAdmin]
         [Route("general")]
-        public IActionResult General(SettingsGeneral model)
+        public async System.Threading.Tasks.Task<IActionResult> GeneralAsync(SettingsGeneral model)
         {
             var storage = new BlogStorage("");
             model.BlogThemes = BlogSettings.BlogThemes;
@@ -143,15 +143,15 @@ namespace Blogifier.Core.Controllers
                 BlogSettings.Cover = model.Image;
                 BlogSettings.Theme = model.BlogTheme;
 
-                _db.CustomFields.SetCustomField(CustomType.Application, 0, Constants.Title, model.Title);
-                _db.CustomFields.SetCustomField(CustomType.Application, 0, Constants.Description, model.Description);
-                _db.CustomFields.SetCustomField(CustomType.Application, 0, Constants.ProfileLogo, model.Logo);
-                _db.CustomFields.SetCustomField(CustomType.Application, 0, Constants.ProfileAvatar, model.Avatar);
-                _db.CustomFields.SetCustomField(CustomType.Application, 0, Constants.ProfileImage, model.Image);
-                _db.CustomFields.SetCustomField(CustomType.Application, 0, Constants.BlogTheme, model.BlogTheme);
-                _db.CustomFields.SetCustomField(CustomType.Application, 0, Constants.SendGridApiKey, model.EmailKey);
-                _db.CustomFields.SetCustomField(CustomType.Application, 0, Constants.HeadCode, model.BlogHead);
-                _db.CustomFields.SetCustomField(CustomType.Application, 0, Constants.FooterCode, model.BlogFooter);
+                await _db.CustomFields.SetCustomField(CustomType.Application, 0, Constants.Title, model.Title);
+                await _db.CustomFields.SetCustomField(CustomType.Application, 0, Constants.Description, model.Description);
+                await _db.CustomFields.SetCustomField(CustomType.Application, 0, Constants.ProfileLogo, model.Logo);
+                await _db.CustomFields.SetCustomField(CustomType.Application, 0, Constants.ProfileAvatar, model.Avatar);
+                await _db.CustomFields.SetCustomField(CustomType.Application, 0, Constants.ProfileImage, model.Image);
+                await _db.CustomFields.SetCustomField(CustomType.Application, 0, Constants.BlogTheme, model.BlogTheme);
+                await _db.CustomFields.SetCustomField(CustomType.Application, 0, Constants.SendGridApiKey, model.EmailKey);
+                await _db.CustomFields.SetCustomField(CustomType.Application, 0, Constants.HeadCode, model.BlogHead);
+                await _db.CustomFields.SetCustomField(CustomType.Application, 0, Constants.FooterCode, model.BlogFooter);
 
                 model.Profile.BlogTheme = model.BlogTheme;
 

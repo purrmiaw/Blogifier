@@ -65,7 +65,7 @@ namespace Blogifier.Core.Controllers.Api
         // GET: api/assets/profilelogo/3
         [HttpGet]
         [Route("{type}/{id:int}")]
-        public Asset UpdateProfileImage(string type, int id)
+        public async Task<Asset> UpdateProfileImageAsync(string type, int id)
         {
             var asset = _db.Assets.Single(a => a.Id == id);
             type = type.ToLower();
@@ -75,22 +75,22 @@ namespace Blogifier.Core.Controllers.Api
                 if(type == "applogo")
                 {
                     BlogSettings.Logo = asset.Url;
-                    _db.CustomFields.SetCustomField(CustomType.Application, 0, Constants.ProfileLogo, asset.Url);
+                    await _db.CustomFields.SetCustomField(CustomType.Application, 0, Constants.ProfileLogo, asset.Url);
                 }
                 else if(type == "appavatar")
                 {
                     ApplicationSettings.ProfileAvatar = asset.Url;
-                    _db.CustomFields.SetCustomField(CustomType.Application, 0, Constants.ProfileAvatar, asset.Url);
+                    await _db.CustomFields.SetCustomField(CustomType.Application, 0, Constants.ProfileAvatar, asset.Url);
                 }
                 else if (type == "appimage")
                 {
                     BlogSettings.Cover = asset.Url;
-                    _db.CustomFields.SetCustomField(CustomType.Application, 0, Constants.ProfileImage, asset.Url);
+                    await _db.CustomFields.SetCustomField(CustomType.Application, 0, Constants.ProfileImage, asset.Url);
                 }
                 else if (type == "apppostimage")
                 {
                     BlogSettings.PostCover = asset.Url;
-                    _db.CustomFields.SetCustomField(CustomType.Application, 0, Constants.PostImage, asset.Url);
+                    await _db.CustomFields.SetCustomField(CustomType.Application, 0, Constants.PostImage, asset.Url);
                 }
                 else
                 {
