@@ -47,7 +47,7 @@ namespace Blogifier.Core.Controllers
 
         [HttpPost]
         [Route("profile")]
-        public IActionResult Profile(SettingsProfile model)
+        public async System.Threading.Tasks.Task<IActionResult> Profile(SettingsProfile model)
         {
             var profile = GetProfile();
             if (ModelState.IsValid)
@@ -85,7 +85,7 @@ namespace Blogifier.Core.Controllers
                 // save custom fields
                 if(profile.Id > 0 && model.CustomFields != null)
                 {
-                    SaveCustomFields(model.CustomFields, profile.Id);
+                   await SaveCustomFieldsAsync(model.CustomFields, profile.Id);
                 }
                 model.CustomFields = _db.CustomFields.GetUserFields(model.Profile.Id).Result;
 
@@ -181,19 +181,19 @@ namespace Blogifier.Core.Controllers
         [HttpPost]
         [MustBeAdmin]
         [Route("posts")]
-        public IActionResult Posts(SettingsPosts model)
+        public async System.Threading.Tasks.Task<IActionResult> Posts(SettingsPosts model)
         {
             model.Profile = GetProfile();
 
             if (ModelState.IsValid)
             {
-                _db.CustomFields.SetCustomField(CustomType.Application, 0, Constants.ItemsPerPage, model.ItemsPerPage.ToString());
+                await _db.CustomFields.SetCustomField(CustomType.Application, 0, Constants.ItemsPerPage, model.ItemsPerPage.ToString());
                 BlogSettings.ItemsPerPage = model.ItemsPerPage;
 
-                _db.CustomFields.SetCustomField(CustomType.Application, 0, Constants.PostImage, model.PostImage);
+                await _db.CustomFields.SetCustomField(CustomType.Application, 0, Constants.PostImage, model.PostImage);
                 BlogSettings.PostCover = model.PostImage;
 
-                _db.CustomFields.SetCustomField(CustomType.Application, 0, Constants.PostCode, model.PostFooter);
+                await _db.CustomFields.SetCustomField(CustomType.Application, 0, Constants.PostCode, model.PostFooter);
 
                 _db.Complete();
 
@@ -220,13 +220,13 @@ namespace Blogifier.Core.Controllers
             return _db.Profiles.Single(p => p.IdentityName == User.Identity.Name);
         }
 
-        void SaveCustomFields(Dictionary<string, string> fields, int profileId)
+        async System.Threading.Tasks.Task SaveCustomFieldsAsync(Dictionary<string, string> fields, int profileId)
         {
             if(fields != null && fields.Count > 0)
             {
                 foreach (var field in fields)
                 {
-                    _db.CustomFields.SetCustomField(CustomType.Profile, profileId, field.Key, field.Value);
+                    await _db.CustomFields.SetCustomField(CustomType.Profile, profileId, field.Key, field.Value);
                 }
             }
         }

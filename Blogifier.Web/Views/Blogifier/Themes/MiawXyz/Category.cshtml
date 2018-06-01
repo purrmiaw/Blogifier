@@ -1,0 +1,60 @@
+﻿@using Blogifier.Core.Common
+@using Blogifier.Core.Data.Models
+@using Blogifier.Core.Extensions
+@model BlogCategoryModel
+@inject IComponentHelper helper
+@{
+    var avatar = ApplicationSettings.ProfileAvatar;
+    Model.Pager.RouteValue = Model.Category.Slug + "/";
+
+    if (Model.Profile != null)
+    {
+        if (!string.IsNullOrEmpty(Model.Profile.Avatar))
+        {
+            avatar = Model.Profile.Avatar;
+        }
+        Model.Pager.RouteValue = "category/" + Model.Category.Slug + "/";
+    }
+}
+
+<!-- main -->
+<section class="breadcrumbs">
+    <div class="container">
+        <ol class="breadcrumb">
+            <li><a href="https://miaw.xyz">Home</a></li>
+            <li><a asp-area="" asp-controller="" asp-action="">Blog</a></li>
+            <li class="active">@Model.Category.Title</li>
+        </ol>
+    </div>
+</section>
+
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                @Html.Partial($"~/{ApplicationSettings.BlogThemesFolder}/MiawXyz/_Shared/_Post.cshtml", Model.Posts)
+                @Html.Partial($"~/{ApplicationSettings.BlogThemesFolder}/MiawXyz/_Shared/_Pager.cshtml", Model.Pager)
+            </div>
+            <div class="col-lg-4">
+                <div class="sidebar">
+
+                    @await helper.InvokeAsync(Component, "PostCategories")
+                    @await helper.InvokeAsync(Component, "PostList", new { listType = 1, contentType = 1, count = 1 })
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@*<main class="page-category">
+        <header class="page-cover" style="background-image: url('@Model.CoverImg')">
+            <h2 class="page-cover-title">@Model.Category.Title</h2>
+            <p class="page-cover-desc">Category</p>
+        </header>
+        <div class="page-content">
+            <div class="container">
+                @Html.Partial($"~/{ApplicationSettings.BlogThemesFolder}/OneFour/_Shared/_Post.cshtml", Model.Posts)
+                @Html.Partial($"~/{ApplicationSettings.BlogThemesFolder}/OneFour/_Shared/_Pager.cshtml", Model.Pager)
+            </div>
+        </div>
+    </main>*@

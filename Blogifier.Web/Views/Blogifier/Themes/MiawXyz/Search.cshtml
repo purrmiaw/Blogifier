@@ -1,0 +1,50 @@
+﻿@using Blogifier.Core.Data.Models
+@using Blogifier.Core.Common
+@model BlogPostsModel
+@inject IComponentHelper helper
+@{
+    var term = ViewBag.Term;
+    var search = "search";
+    Model.Pager.RouteValue = search + "/" + term + "/";
+}
+
+<!-- main -->
+<section class="breadcrumbs">
+    <div class="container">
+        <ol class="breadcrumb">
+            <li><a href="https://miaw.xyz">Home</a></li>
+            <li><a asp-area="" asp-controller="" asp-action="">Blog</a></li>
+            <li class="active">Search</li>
+        </ol>
+    </div>
+</section>
+
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                @Html.Partial($"~/{ApplicationSettings.BlogThemesFolder}/MiawXyz/_Shared/_Post.cshtml", Model.Posts)
+                @Html.Partial($"~/{ApplicationSettings.BlogThemesFolder}/MiawXyz/_Shared/_Pager.cshtml", Model.Pager)
+            </div>
+            <div class="col-lg-4">
+                <div class="sidebar">
+                    @await helper.InvokeAsync(Component, "PostCategories")
+                    @await helper.InvokeAsync(Component, "PostList", new { listType = 1, contentType = 1, count = 1 })
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@*<main class="page-search">
+        <header class="page-cover" style="background-image: url('@Model.CoverImg')">
+            <h2 class="page-cover-title">@term</h2>
+            <p class="page-cover-desc">Search Results:</p>
+        </header>
+        <div class="page-content">
+            <div class="container">
+                @Html.Partial($"~/{ApplicationSettings.BlogThemesFolder}/OneFour/_Shared/_Post.cshtml", Model.Posts)
+                @Html.Partial($"~/{ApplicationSettings.BlogThemesFolder}/OneFour/_Shared/_Pager.cshtml", Model.Pager)
+            </div>
+        </div>
+    </main>*@

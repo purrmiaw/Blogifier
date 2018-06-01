@@ -1,0 +1,85 @@
+﻿@using Blogifier.Core.Common
+@{
+    var logoImg = BlogSettings.Logo;
+    var logoUrl = "http://blogifier.net";
+    try
+    {
+        logoImg = Model.LogoImg;
+        logoUrl = Model.LogoUrl;
+    }
+    catch { }
+}
+
+<header id="header">
+    <div class="container">
+        <div class="navbar-backdrop">
+            <div class="navbar">
+                <div class="navbar-left">
+                    <a class="navbar-toggle"><i class="fa fa-bars"></i></a>
+                    <a href="https://miaw.xyz" class="logo"><img src="https://miaw.xyz/m/img/logo.png" alt="@BlogSettings.Title"></a>
+                    <nav class="nav">
+                        <ul>
+                            <li>
+                                <a href="https://miaw.xyz">Home</a>
+                            </li>
+                            <li>
+                                <a href="https://miaw.xyz/m/games">Games</a>
+                            </li>
+                            <li>
+                                <a asp-area="" asp-controller="" asp-action="">Blog</a>
+                            </li>
+                            <li>
+                                <a href="#">Forums</a>
+                            </li>
+                            <li>
+                                <a asp-controller="home" asp-action="contact">Contact</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="nav navbar-right">
+                    <ul>
+                        @*@if (Model.IsLoggedIn)
+                        {
+                            <li class="hidden-xs-down"><a href="#">@Model.Username</a></li>
+                            <li class="hidden-xs-down"><a asp-area="" asp-controller="account" asp-action="logout">Logout</a></li>
+                            <li><a data-toggle="search"><i class="fa fa-search"></i></a></li>
+                        }
+                        else
+                        {
+                            <li class="hidden-xs-down"><a asp-area="" asp-controller="account" asp-action="login">Login</a></li>
+                            <li class="hidden-xs-down"><a asp-area="" asp-controller="account" asp-action="register">Register</a></li>
+                            <li><a data-toggle="search"><i class="fa fa-search"></i></a></li>
+                        }*@
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="navbar-search">
+            <div class="container">
+                <form method="post">
+                    <input type="text" class="form-control" placeholder="Search...">
+                    <i class="fa fa-times close"></i>
+                </form>
+            </div>
+        </div>
+    </div>
+</header>
+
+@*<header class="blog-header d-flex flex-column">
+    <div class="container d-flex">
+        <a href="~/" class="blog-logo my-auto d-flex">
+            <img src="@logoImg" alt="@BlogSettings.Title" class="my-auto" />
+            @if (ViewData["bodyClass"] != null && ViewData["bodyClass"].ToString() != "home")
+            {
+                <span class="my-auto">@BlogSettings.Title</span>
+            }
+        </a>
+        <ul class="blog-social nav ml-auto my-auto">
+            <li class="blog-social-item"><a href="https://twitter.com/miawxyz" target="_blank" class="blog-social-link"><i class="blog-social-icon fa fa-twitter"></i></a></li>
+            <li class="blog-social-item"><a href="#" target="_blank" class="blog-social-link"><i class="blog-social-icon fa fa-google-plus"></i></a></li>
+            <li class="blog-social-item"><a href="#" target="_blank" class="blog-social-link"><i class="blog-social-icon fa fa-facebook-official"></i></a></li>
+        </ul>
+        <button class="blog-search-toggle btn-unstyled" type="button" data-toggle="modal" data-target="#blog-search"><i class="fa fa-search"></i></button>
+    </div>
+</header>*@

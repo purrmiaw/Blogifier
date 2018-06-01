@@ -1,0 +1,32 @@
+﻿@using Blogifier.Core.Common
+@{
+    var pageTitle = BlogSettings.Title;
+    var pageDescription = BlogSettings.Description;
+    var customHead = "";
+    try
+    {
+        pageTitle = Model.PageTitle;
+        pageDescription = Model.PageDescription;
+        var cf = Model.CustomFields;
+        customHead = (cf.ContainsKey(Constants.HeadCode) && !string.IsNullOrEmpty(cf[Constants.HeadCode])) ? cf[Constants.HeadCode] : "";
+    }
+    catch { }
+}
+<!-- meta -->
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>@pageTitle - MiawXyz</title>
+<meta name="description" content="@pageDescription">
+
+<!-- vendor css -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700">
+<link rel="stylesheet" href="@Url.Content("~/themes/miawxyz/plugins/font-awesome/css/font-awesome.min.css")">
+<link rel="stylesheet" href="@Url.Content("~/themes/miawxyz/plugins/bootstrap/css/bootstrap.min.css")">
+<link rel="stylesheet" href="@Url.Content("~/themes/miawxyz/plugins/animate/animate.min.css")">
+
+<!-- theme css -->
+<link rel="stylesheet" href="@Url.Content("~/themes/miawxyz/css/theme.min.css")">
+<link rel="stylesheet" href="@Url.Content("~/themes/miawxyz/css/custom.css")">
+
+@Html.Raw(customHead)

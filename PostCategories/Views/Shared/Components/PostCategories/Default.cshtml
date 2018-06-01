@@ -1,0 +1,14 @@
+﻿@using Blogifier.Core.Common;
+@using Blogifier.Core.Data.Domain;
+@using Blogifier.Core.Extensions
+@model IEnumerable<Category>
+
+<div class="widget widget-tags">
+    <h5 class="widget-title">Categories</h5>
+    <div class="post-tags">
+        @foreach(var item in Model)
+            {
+            <a href="~/category/@item.Slug">@item.Title</a>
+            }
+    </div>
+</div>

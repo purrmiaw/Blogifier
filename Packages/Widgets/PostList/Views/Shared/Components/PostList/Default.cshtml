@@ -3,7 +3,20 @@
 @using Blogifier.Core.Extensions
 @model IEnumerable<BlogPost>
 
-@foreach (var item in Model)
+<div class="widget widget-post">
+    <h5 class="widget-title">Featured</h5>
+    @foreach (var item in Model)
+    {
+        var img = string.IsNullOrEmpty(item.Image) ? BlogSettings.PostCover : item.Image;
+
+        <a href="~/@ApplicationSettings.BlogRoute@item.Slug"><img src="@img" alt=""></a>
+        <h4><a href="~/@ApplicationSettings.BlogRoute@item.Slug">@item.Title</a></h4>
+        <span><i class="fa fa-clock-o"></i> @item.Published.ToString("MMMM d, yyyy")</span>
+        <p>@Html.Raw(item.Content)</p>
+    }
+</div>
+
+@*@foreach (var item in Model)
 {
     var img = string.IsNullOrEmpty(item.Image) ? BlogSettings.PostCover : item.Image;
 
@@ -17,4 +30,4 @@
         <div class="post-description">@Html.Raw(item.Content)</div>
         <a class="post-more btn btn-rounded btn-dark" href="~/@ApplicationSettings.BlogRoute@item.Slug">Read</a>
     </article>
-}
+}*@
